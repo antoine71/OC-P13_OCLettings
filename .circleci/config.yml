@@ -46,6 +46,7 @@ jobs:
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push antoine71/oclettings-docker-build:$TAG               
   release:
+    steps:
       - heroku/push-docker-image
 
 workflows:
