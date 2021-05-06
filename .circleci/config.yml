@@ -35,7 +35,7 @@ jobs:
           command: |
             pip install -r requirements.txt      
       - setup_remote_docker:
-        version: 20.10.2
+          version: 20.10.2
       - run: |
           docker build -t antoine71/oclettings-docker-build:$CIRCLE_TAG .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
