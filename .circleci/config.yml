@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  heroku: circleci/heroku@1.2.6
 jobs:
   build:
     docker:
@@ -41,11 +43,23 @@ jobs:
           docker build -t antoine71/oclettings-docker-build:$TAG .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push antoine71/oclettings-docker-build:$TAG               
+  release:
+    docker:
+      - image: antoine71/oclettings-docker-build:$CIRCLE_SHA1
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS 
+    steps:
+      - heroku/push-docker-image
 workflows:
-  version: 2
+  version: 2.1
   build_and_test:
     jobs:
       - build
       - test
       - quality
       - package
+      - release:
+          requires:
+            - package
+
