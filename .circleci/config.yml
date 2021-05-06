@@ -25,7 +25,21 @@ jobs:
       - run:
           command: |
             pip install -r requirements.txt
-            flake8            
+            flake8
+  package:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      -checkout
+      - run:
+          command: |
+            pip install -r requirements.txt      
+      - setup_remote_docker:
+        version: 20.10.2
+      - run: |
+          docker build -t antoine71/oclettings-docker-build:$CIRCLE_TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push antoine71/oclettings-docker-build:$CIRCLE_TAG               
 workflows:
   version: 2
   build_and_test:
@@ -33,3 +47,4 @@ workflows:
       - build
       - test
       - quality
+      - package
