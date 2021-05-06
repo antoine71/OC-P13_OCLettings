@@ -37,7 +37,7 @@ jobs:
       - setup_remote_docker:
           version: 20.10.2
       - run: |
-          TAG=$CIRCLE_BRANCH
+          TAG=$CIRCLE_SHA1
           docker build -t antoine71/oclettings-docker-build:$TAG .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push antoine71/oclettings-docker-build:$TAG               
