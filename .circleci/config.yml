@@ -4,40 +4,59 @@ executors:
   default:
     docker:
       - image: circleci/python:3.9
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_ACCESS_TOKEN 
 
 orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
   build:
+    working_directory: ~/oc_lettings
     executor: default
     steps:
       - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
+      - restore_cache:  # ensure this step occurs *before* installing dependencies
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
-            pip install -r requirements.txt
+            sudo pip install pipenv
+            pipenv install
       - save_cache:
-          key: build-cache
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
-            - cache
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.9/site-packages"
   test:  
+    working_directory: ~/oc_lettings
     executor: default
     steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
       - restore_cache:
-          keys: 
-            - build-cache   
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
-            pytest
-  quality:
-    executor: default
-    steps:
-      - restore_cache:
-          keys: 
-            - build-cache         
-      - run:
-          command: |
-            flake8
+            pipenv run pytest
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-results
+      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: test-results
+          destination: tr1            
+  # quality:
+  #   executor: default
+  #   steps:
+  #     - restore_cache:
+  #         keys: 
+  #           - build-cache         
+  #     - run:
+  #         command: |
+  #           flake8
   package:
     executor: default
     steps:
@@ -63,7 +82,7 @@ workflows:
     jobs:
       - build
       - test
-      - quality
-      - package
+      # - quality
+      # - package
 
 
