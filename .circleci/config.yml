@@ -47,7 +47,7 @@ jobs:
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push $DOCKER_USER/oclettings-docker-build:$TAG
           docker tag $DOCKER_USER/oclettings-docker-build:$TAG registry.heroku.com/oc-lettings-2/web
-          eroku container:login
+          heroku container:login
           docker push registry.heroku.com/oc-lettings-2/web
           heroku container:release web -a oc-lettings-2
 
