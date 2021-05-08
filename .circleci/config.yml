@@ -50,7 +50,7 @@ jobs:
       - image: antoine71/oclettings-docker-build
         auth:
           username: $DOCKER_USER
-          password: $DOCKE_PASS  
+          password: $DOCKER_PASS  
     steps:
       - heroku/push-docker-image
 
