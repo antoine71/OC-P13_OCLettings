@@ -20,15 +20,16 @@ jobs:
       - run: sudo chown -R circleci:circleci /usr/local/bin
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
       - restore_cache:  # ensure this step occurs *before* installing dependencies
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile" }}
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install
+            python -m venv env
+            source env/bin/activate
+            pip install -r requirements.txt
       - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile" }}
+          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
-            - ".venv"
+            - "env"
             - "/usr/local/bin"
             - "/usr/local/lib/python3.9/site-packages"
   test:  
@@ -42,7 +43,8 @@ jobs:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile" }}
       - run:
           command: |
-            pipenv run pytest
+            source env/bin/activate
+            pytest
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
