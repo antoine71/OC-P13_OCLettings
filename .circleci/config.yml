@@ -45,7 +45,7 @@ jobs:
           command: |
             . venv/bin/activate
             pytest     
-  test:  
+  linting:  
     executor: default
     steps:
       - checkout
