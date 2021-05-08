@@ -40,7 +40,7 @@ jobs:
       - run: sudo chown -R circleci:circleci /usr/local/bin
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
       - restore_cache:
-          key: oclettings_env-{{ .Branch }}-{{ checksum "Pipfile" }}
+          key: oclettings_env-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           command: |
             . venv/bin/activate
