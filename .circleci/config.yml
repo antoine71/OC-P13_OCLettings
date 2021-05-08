@@ -83,13 +83,15 @@ jobs:
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh          
       - run:
-          name: Building container
+          name: Pulling container from Dockerhub
           command: |
-            docker build -t registry.heroku.com/oc-lettings-2/web .   
+            echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
+            docker pull $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 
       - run:
           name: Pushing container to Heroku
           command: |
             heroku container:login
+            docker tag DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-2/web
             docker push registry.heroku.com/oc-lettings-2/web
       - run:
           name: Releasing container
