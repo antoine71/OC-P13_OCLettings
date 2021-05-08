@@ -58,8 +58,7 @@ jobs:
   package:
     executor: default
     steps:
-      - checkout
-      - restore_cache_cmd      
+      - checkout   
       - setup_remote_docker:
           version: 20.10.2
       - run:
@@ -74,8 +73,7 @@ jobs:
   deploy:
     executor: default
     steps:
-      - checkout
-      - restore_cache_cmd      
+      - checkout 
       - setup_remote_docker:
           version: 20.10.2
       - run:
@@ -91,7 +89,7 @@ jobs:
           name: Pushing container to Heroku
           command: |
             heroku container:login
-            docker tag DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-2/web
+            docker tag $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 registry.heroku.com/oc-lettings-2/web
             docker push registry.heroku.com/oc-lettings-2/web
       - run:
           name: Releasing container
