@@ -42,13 +42,14 @@ jobs:
           version: 20.10.2
       - run: |
           TAG=$CIRCLE_SHA1
+          sudo curl https://cli-assets.heroku.com/install.sh | sh
           docker build -t $DOCKER_USER/oclettings-docker-build:$TAG .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push $DOCKER_USER/oclettings-docker-build:$TAG
           docker tag $DOCKER_USER/oclettings-docker-build:$TAG registry.heroku.com/oc-lettings-2/web
           HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-          docker push registry.heroku.com/oc-lettings-2/web
-          heroku container:release web -a oc-lettings-2
+          HEROKU_API_KEY=${HEROKU_TOKEN} docker push registry.heroku.com/oc-lettings-2/web
+          HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release web -a oc-lettings-2
 
 workflows:
   build_and_test:
