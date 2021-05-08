@@ -1,7 +1,6 @@
 # Django
 django==3.0
 django-heroku==0.3.1
-psycopg2-binary==2.8.6
 
 # Testing
 pytest==6.2.3
