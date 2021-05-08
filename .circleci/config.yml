@@ -1,5 +1,17 @@
 version: 2.1
 
+commands:
+  restore_cache_cmd:
+    steps:
+      - restore_cache:
+          key: oclettings_env-{{ .Branch }}-{{ checksum "requirements.txt" }}
+  save_cache_cmd:
+    steps:    
+      - save_cache:
+          key: oclettings_env-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+
 executors:
   default:
     docker:
@@ -13,34 +25,21 @@ orbs:
 
 jobs:
   build:
-    working_directory: ~/oc_lettings
     executor: default
     steps:
       - checkout
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
-      # - restore_cache:  # ensure this step occurs *before* installing dependencies
-      #     key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - restore_cache_cmd
       - run:
           command: |
             python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-      - save_cache:
-          key: oclettings_env-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.9/site-packages"
+      - save_cache_cmd
   test:  
-    working_directory: ~/oc_lettings
     executor: default
     steps:
       - checkout
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
-      - restore_cache:
-          key: oclettings_env-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - restore_cache_cmd
       - run:
           command: |
             . venv/bin/activate
@@ -85,7 +84,7 @@ workflows:
       - build      
       - test:
           requires:
-            - build
+            - build            
       # - quality
       # - package
 
