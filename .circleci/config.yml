@@ -41,42 +41,62 @@ jobs:
       - checkout
       - restore_cache_cmd
       - run:
+          name: Running tests
           command: |
             . venv/bin/activate
-            pytest
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: test-results
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: test-results
-          destination: tr1            
-  # quality:
-  #   executor: default
-  #   steps:
-  #     - restore_cache:
-  #         keys: 
-  #           - build-cache         
-  #     - run:
-  #         command: |
-  #           flake8
+            pytest     
+  test:  
+    executor: default
+    steps:
+      - checkout
+      - restore_cache_cmd
+      - run:
+          name: Running linting
+          command: |
+            . venv/bin/activate
+            flake8   
   package:
     executor: default
     steps:
-      - restore_cache:
-          keys: 
-            - build-cache        
+      - checkout
+      - restore_cache_cmd      
       - setup_remote_docker:
           version: 20.10.2
-      - run: |
-          TAG=$CIRCLE_SHA1
-          sudo curl https://cli-assets.heroku.com/install.sh | sh
-          docker build -t $DOCKER_USER/oclettings-docker-build:$TAG .
-          echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
-          docker push $DOCKER_USER/oclettings-docker-build:$TAG
-          docker tag $DOCKER_USER/oclettings-docker-build:$TAG registry.heroku.com/oc-lettings-2/web
-          docker tag $DOCKER_USER/oclettings-docker-build:$TAG $DOCKER_USER/oclettings-docker-build:latest
-          heroku container:login
-          docker push registry.heroku.com/oc-lettings-2/web
-          heroku container:release web -a oc-lettings-2
+          docker_layer_caching: true 
+      - run:
+          name: Building container
+          command: |
+            docker build -t $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 .   
+      - run:
+          name: Pushing container to Dockerhub
+          command: |
+            echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1
+  deploy:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache_cmd      
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: true 
+      - run:
+          name: Installing Heroku CLI
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh          
+      - run:
+          name: Building container
+          command: |
+            docker build -t registry.heroku.com/oc-lettings-2/web .   
+      - run:
+          name: Pushing container to Heroku
+          command: |
+            heroku container:login
+            docker push registry.heroku.com/oc-lettings-2/web
+      - run:
+          name: Releasing container
+          command: |          
+            heroku container:release web -a oc-lettings-2
 
 workflows:
   build_and_test:
@@ -84,8 +104,17 @@ workflows:
       - build      
       - test:
           requires:
-            - build            
-      # - quality
-      # - package
+            - build
+      - linting:
+          requires:
+            - build                           
+      - package:
+          requires:
+            - test
+            - linting
+      - deploy:
+          requires:
+            - package
+
 
 
