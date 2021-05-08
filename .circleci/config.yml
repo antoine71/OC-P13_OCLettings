@@ -45,14 +45,10 @@ jobs:
           docker build -t $DOCKER_USER/oclettings-docker-build:$TAG .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push $DOCKER_USER/oclettings-docker-build:$TAG
-  release:
-    docker:
-      - image: antoine71/oclettings-docker-build
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS  
-    steps:
-      - heroku/push-docker-image
+          docker tag $DOCKER_USER/oclettings-docker-build:$TAG registry.heroku.com/oc-lettings-2/web
+          HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+          docker push registry.heroku.com/oc-lettings-2/web
+          heroku container:release web -a oc-lettings-2
 
 workflows:
   build_and_test:
