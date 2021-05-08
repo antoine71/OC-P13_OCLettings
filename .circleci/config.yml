@@ -74,8 +74,6 @@ jobs:
     executor: default
     steps:
       - checkout 
-      - setup_remote_docker:
-          version: 20.10.2
       - run:
           name: Installing Heroku CLI
           command: |
@@ -110,9 +108,13 @@ workflows:
           requires:
             - test
             - linting
+          filters:
+            branches:
+              only: main    
       - deploy:
           requires:
             - package
+            
 
 
 
