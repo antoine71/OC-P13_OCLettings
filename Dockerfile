@@ -1,8 +1,10 @@
-FROM python:3.9
-RUN mkdir /code
-WORKDIR /code
-COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY . /code/
-EXPOSE 8000
-CMD gunicorn -b 0.0.0.0:$PORT config.wsgi
+FROM python:3.9-slim-buster
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+CMD [ "gunicorn", "config.wsgi" , "--bind=0.0.0.0"]
