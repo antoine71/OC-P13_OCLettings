@@ -73,7 +73,9 @@ jobs:
   deploy:
     executor: default
     steps:
-      - checkout 
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.2      
       - run:
           name: Installing Heroku CLI
           command: |
@@ -95,7 +97,7 @@ jobs:
             heroku container:release web -a oc-lettings-2
 
 workflows:
-  build_and_test:
+  build_test_package_deploy:
     jobs:
       - build      
       - test:
@@ -114,7 +116,7 @@ workflows:
       - deploy:
           requires:
             - package
-            
+
 
 
 
