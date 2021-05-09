@@ -1,8 +1,20 @@
-<title>{{ title }}</title>
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+
 <h1>{{ title }}</h1>
+<h2>Description</h2>
+<h2>Amenities</h2>
+<h2>Location</h2>
+<div id="map"></div>
+
 <p>{{ address.number }} {{ address.street }}</p>
 <p>{{ address.city }}, {{ address.state }} {{ address.zip_code }}</p>
 <p>{{ address.country_iso_code }}</p>
 <div><a href="{% url 'lettings:index' %}">Back</a></div>
 <div><a href="{% url 'home' %}">Home</a></div>
 <div><a href="{% url 'profiles:index' %}">Profiles</a></div>
+{% endblock %}
+
+

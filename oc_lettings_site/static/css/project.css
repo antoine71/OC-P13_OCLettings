@@ -1,0 +1,173 @@
+body {
+    margin: 0;
+    background-color: rgba(116, 90, 19, .5);
+    background-color: white;
+    font-family: 'Open Sans', sans-serif;    
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:active {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 2em;
+    text-align: center;
+}
+
+div.container {
+    position: relative;
+}
+
+.bg_image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+header.wrapper { 
+    position: relative;
+    z-index: 1;
+    background-color: rgba(116, 90, 19, .5);
+    font-weight: 600;   
+    color: black;     
+    width: 100%;
+    display: grid;
+    column-gap: 1em;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "logo contacts"
+        "logo menu";
+
+}
+
+header > .logo {
+    grid-area: logo;
+    align-self: center;
+}
+
+header > .contacts {
+    grid-area: contacts;
+    align-self: center;
+    font-weight: 400; 
+}
+
+header > .menu {
+    grid-area: menu;
+    align-self: center;
+}
+
+header img {
+    height: 120px;
+}
+
+.bg_image img {
+    width: 100%;
+}
+
+.contacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.networks {
+    display: flex;
+    justify-content: center;
+}
+
+.networks .wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 1em;
+}
+
+.phone {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5em;
+}
+
+.email {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5em;    
+}
+
+svg {
+    text-align: center;
+    align-self: center;
+}
+
+.menu_box {
+    display: flex;
+    justify-content: space-around;
+    margin: 0em 1em 1em 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #953517;
+    border-width: 2px;
+}
+
+.lettings_list {
+    display: grid;
+    grid-template-columns: min-content min-content;
+    justify-content: space-evenly;
+    row-gap: 3em;
+}
+
+.letting_card {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    text-transform: uppercase;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.letting_card:hover {
+    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);
+}
+
+.letting_city {
+    font-size: 1.2em;
+    padding-left: 1em;
+    padding-right: 1em;    
+}
+
+.letting_title {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.letting_card a {
+    font-size: 1.3em;
+    color: #135D74;
+}
+
+.house_picture {
+    margin-top: 2em;
+}
+
+.house_picture img {
+    max-width: 380px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+  }
