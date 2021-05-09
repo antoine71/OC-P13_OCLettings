@@ -2,20 +2,23 @@
 {% load static %}
 
 {% block content %}
-<h1 class="letting_h1">Lettings</h1>
-{% if lettings_list %}
-    <div class="lettings_list">
+<section class="main_section">
+    <h1 class="letting_h1">Lettings</h1>
+    {% if lettings_list %}
+    <div class="cards_list">
     {% for letting in lettings_list %}
-        <div class="letting_card">
-            <div class="letting_title">
-                <a href="{% url 'lettings:letting' letting_id=letting.id %}">
-                    {{ letting.title }}
-                </a>
+        <div class="small_card">
+            <div class="card_heading">
+                <div class="card_title">
+                    <a href="{% url 'lettings:letting' letting_id=letting.id %}">
+                        {{ letting.title }}
+                    </a>
+                </div>
+                <div class="card_subtitle">
+                    {{ letting.address.city }}, {{ letting.address.state }}
+                </div>
             </div>
-            <div class="letting_city">
-                {{ letting.address.city }}, {{ letting.address.state }}
-            </div>
-            <div class="house_picture">
+            <div class="card_picture">
                 <img src="{% static 'images/generic_house.jpeg' %}">
             </div>
         </div>
@@ -24,6 +27,5 @@
 {% else %}
     <p>No lettings are available.</p>
 {% endif %}
-<div><a href="{% url 'home' %}">Home</a></div>
-<div><a href="{% url 'profiles:index' %}">Profiles</a></div>
+</section>
 {% endblock %}
