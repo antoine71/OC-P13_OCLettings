@@ -1,6 +1,7 @@
 import os
 
 from .base import *  # noqa
+import django_heroku
 
 
 # GENERAL
@@ -20,3 +21,9 @@ ALLOWED_HOSTS = ['oc-lettings-2.herokuapp.com']
 SESSION_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
 CSRF_COOKIE_SECURE = True
+
+# HEROKU
+# ------------------------------------------------------------------------------
+# configure django app for Heroku
+django_heroku.settings(locals(), databases=False, allowed_hosts=False,
+                       secret_key=False)
