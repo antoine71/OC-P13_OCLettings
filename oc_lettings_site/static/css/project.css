@@ -123,14 +123,14 @@ svg {
     border-width: 2px;
 }
 
-.lettings_list {
+.cards_list {
     display: grid;
     grid-template-columns: min-content min-content;
     justify-content: space-evenly;
     row-gap: 3em;
 }
 
-.letting_card {
+.small_card {
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
     text-transform: uppercase;
@@ -139,35 +139,60 @@ svg {
     box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 }
 
-.letting_card:hover {
+.small_card:hover {
     box-shadow: 0 5px 8px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);
 }
 
-.letting_city {
-    font-size: 1.2em;
-    padding-left: 1em;
-    padding-right: 1em;    
+.small_card .card_heading {
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
-.letting_title {
-    padding-left: 1em;
-    padding-right: 1em;
+.small_card .card_title {
+    font-size: 1.4em;
 }
 
-.letting_card a {
-    font-size: 1.3em;
+.small_card .card_subtitle {
+    font-size: 1.2em;  
+}
+
+.small_card  a {
     color: #135D74;
 }
 
-.house_picture {
+.small_card .card_picture {
     margin-top: 2em;
 }
 
-.house_picture img {
+.small_card .card_picture img {
     max-width: 380px;
 }
 
-#map {
-    height: 400px;
+.main_section {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 5em;
+}
+
+.big_card {
+    box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    padding-top: 1em;
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-bottom: 2em;
+}
+
+.big_card h2 {
+    border-bottom: solid;
+    border-color: slategray;
+    border-width: 2px;
+}
+
+.big_card .card_picture {
+    text-align: center;
+}
+
+.big_card .card_picture img {
     width: 100%;
-  }
+    max-width: 500px;
+}
