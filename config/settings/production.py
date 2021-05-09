@@ -7,7 +7,7 @@ import django_heroku
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-DEBUG = True
+DEBUG = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
