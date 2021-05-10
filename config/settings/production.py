@@ -13,7 +13,7 @@ ALLOWED_HOSTS = ['oc-lettings-2.herokuapp.com']
 # ALLOWED_HOSTS = ['*']
 # STATIC
 # ------------------------
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # SECURITY
 # ------------------------------------------------------------------------------
