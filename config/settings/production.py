@@ -1,5 +1,8 @@
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from .base import *  # noqa
 
 # GENERAL
@@ -9,8 +12,8 @@ DEBUG = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['oc-lettings-2.herokuapp.com']
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.herokuapp.com']
+
 # STATIC
 # ------------------------
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -60,3 +63,20 @@ LOGGING = {
     }
 }
 DEBUG_PROPAGATE_EXCEPTIONS = True
+
+# SENTRY
+# ------------------------------------------------------------------------------
+# https://sentry.io/onboarding/openclassrooms-tu/get-started/
+sentry_sdk.init(
+    dsn="https://a3444ffb771f4f42afd2fa7d19ad2cb2@o640268.ingest.sentry.io/5756905",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

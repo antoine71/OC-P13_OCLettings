@@ -1,77 +1,109 @@
-## Résumé
+# EPICEVENTS
 
-Site web d'Orange County Lettings
+Openclassrooms - Parcours développement Python Projet 13
 
-## Développement local
+## Status
 
-### Prérequis
+This project is under development.
 
-- Compte GitHub avec accès en lecture à ce repository
-- Git CLI
-- SQLite3 CLI
-- Interpréteur Python, version 3.6 ou supérieure
+## Description
 
-Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
+Orange County Lettings is a start-up specialized in the real estate rental business. The start-up is in the midst of expansion in the United States.
 
-### macOS / Linux
+This project consists in refactoring the website and deploying it on Heroku using a CI/CD pipeline and containerization.The website is available at the followig address: http://oc-lettings-2.herokuapp.com.
 
-#### Cloner le repository
+This project uses the following technologies:
 
-- `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+* [Python](https://www.python.org) as the programming language
+* [Django](https://www.djangoproject.com/) as a web framework
+* [Pytest](https://pytest.org) and [Coverage](https://pypi.org/project/coverage/) for testing
+* [Docker](https://www.docker.com) for containrization
+* [CircleCI](https://www.circleci.com) for Continuous Integration
+* [Heroku](https://www.heroku.com) for Deployment
+* [Sentry](https://www.sentry.com) for monitoring
 
-#### Créer l'environnement virtuel
+## Local Deployment
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activer l'environnement `source venv/bin/activate`
-- Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
-`which python`
-- Confirmer que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
-- Pour désactiver l'environnement, `deactivate`
+**Python 3** is required to run the website.
 
-#### Exécuter le site
+1. Clone this repository (or download the code [as a zip file](https://github.com/antoine71/OC_P13_OCLettings/archive/main.zip)), navigate to the root folder of the repository, create and activate a virtual environment, install project dependencies:
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pip install --requirement requirements.txt`
-- `python manage.py runserver`
-- Aller sur `http://localhost:8000` dans un navigateur.
-- Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
+```shell
+git clone https://github.com/antoine71/OC-P13_OCLettings.git
+cd OC-P13_OCLettings
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
 
-#### Linting
+2. Run the server
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `flake8`
+```shell
+$ python manage.py runserver
+```
 
-#### Tests unitaires
+## Usage
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pytest`
+The website is available from the following address:
 
-#### Base de données
+```
+http://localhost:8000/
+```
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(Python-OC-Lettings-FR_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from
-  Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
+## Administration
 
-#### Panel d'administration
+The application comes with an administration site.
 
-- Aller sur `http://localhost:8000/admin`
-- Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
+```
+http://localhost:8000/admin/
+```
 
-### Windows
+Only users with the status `superuser` can log in to the admin site.
 
-Utilisation de PowerShell, comme ci-dessus sauf :
+The database comes with a pre-configured superuser account:
+username: `admin`
+password: `Abc1234!`
 
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
-- Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+## Deployement using Heroku and Docker
+
+1. Create a user account on [Heroku](http://www.heroku.com)
+2. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+3. Download and install [Docker engine](https://docs.docker.com/engine/install/) according to your system requirement.
+3. Create a new Heroku app (replace `<app_name>` by the name you choose)
+
+```shell
+heroku login
+heroku apps:create <app_name>
+````
+
+4. Configure the Django secret key as an environment variable.
+
+```shell
+heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
+```
+
+4. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile. You can now build and push the container using Heroku CLI, then release it the Heroku.
+
+It is preferable to use the command `docker build` rather than `heroku container:push` to build the container since it allows to specify the platform for which the container is build. Building the container from a different plateform using `heroku` command line (eg. arm64) may cause malfunctions.
+
+```shell
+docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
+```
+
+Login to the Heroku container registry:
+
+```shell
+heroku container:login
+```
+
+Push the container and activate it:
+
+```shell
+docker push registry.heroku.com/<app_name>/web
+heroku container:release web -a <app_name>
+```
+
+5. You can now check the website from the following address: `https://<app_name>.herokuapp.com`.
+
+## Deployment using CircleCI CI/CD Pipeline
+
