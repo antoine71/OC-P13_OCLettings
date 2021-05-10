@@ -13,7 +13,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 # STATIC
 # ------------------------
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # SECURITY
 # ------------------------------------------------------------------------------
