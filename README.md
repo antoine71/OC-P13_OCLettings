@@ -107,3 +107,8 @@ heroku container:release web -a <app_name>
 
 ## Deployment using CircleCI CI/CD Pipeline
 
+...
+
+## Using Sentry
+
+...
