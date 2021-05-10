@@ -59,3 +59,4 @@ LOGGING = {
         }
     }
 }
+DEBUG_PROPAGATE_EXCEPTIONS = True
