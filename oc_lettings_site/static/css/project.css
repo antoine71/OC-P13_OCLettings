@@ -1,6 +1,8 @@
+/* General */
+/******************************************************************************/
+
 body {
     margin: 0;
-    background-color: rgba(116, 90, 19, .5);
     background-color: white;
     font-family: 'Open Sans', sans-serif;    
 }
@@ -26,17 +28,19 @@ h1 {
     text-align: center;
 }
 
+h3 {
+    margin: 0;
+    font-size: 1.6em;
+}
+
+/* Base Page styles */
+/******************************************************************************/
+
 div.container {
     position: relative;
 }
 
-.bg_image {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 0;
-}
-
+/* Header styles */
 header.wrapper { 
     position: relative;
     z-index: 1;
@@ -46,17 +50,32 @@ header.wrapper {
     width: 100%;
     display: grid;
     column-gap: 1em;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
-        "logo contacts"
-        "logo menu";
+        "logo brand contacts"
+        "logo brand menu";
 
 }
 
 header > .logo {
     grid-area: logo;
     align-self: center;
+}
+
+header > .brand {
+    grid-area: brand;
+    align-self: center;
+    text-align: center;
+}
+
+.brand_first_line {
+    text-transform: uppercase;
+}
+
+.brand_second_line {
+    color: #953517;
+    font-family: 'Great Vibes', cursive;
 }
 
 header > .contacts {
@@ -74,10 +93,7 @@ header img {
     height: 120px;
 }
 
-.bg_image img {
-    width: 100%;
-}
-
+/* Contacts box styles */
 .contacts {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -111,6 +127,7 @@ svg {
     align-self: center;
 }
 
+/* Menu box styles */
 .menu_box {
     display: flex;
     justify-content: space-around;
@@ -122,6 +139,32 @@ svg {
     border-color: #953517;
     border-width: 2px;
 }
+
+/* Home Page styles */
+/******************************************************************************/
+.bg_image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+.bg_image img {
+    width: 100%;
+}
+
+/* Main Section styles */
+/******************************************************************************/
+
+.main_section {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+
+/* Small card styles */
+/******************************************************************************/
 
 .cards_list {
     display: grid;
@@ -168,11 +211,8 @@ svg {
     max-width: 380px;
 }
 
-.main_section {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-bottom: 5em;
-}
+/* Big card styles */
+/******************************************************************************/
 
 .big_card {
     box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
