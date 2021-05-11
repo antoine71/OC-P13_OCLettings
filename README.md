@@ -34,7 +34,7 @@ The project uses the following technologies:
 
 1. Clone this repository (or download the code [as a zip file](https://github.com/antoine71/OC-P13_OCLettings/archive/refs/heads/main.zip)), navigate to the root folder of the repository, create and activate a virtual environment, install project dependencies:
 
-```shell
+```
 git clone https://github.com/antoine71/OC-P13_OCLettings.git
 cd OC-P13_OCLettings
 python -m venv env
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 2. Run the server
 
-```shell
+```
 $ python manage.py runserver
 ```
 
@@ -74,25 +74,27 @@ password: `Abc1234!`
 
 ## Deployement using Heroku and Docker CLI
 
+The application is pre-configured to be built in a Docker container and deployed on Heroku for production. 
+
 1. Create a user account on [Heroku](https://www.heroku.com)
 2. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
 3. Download and install [Docker engine](https://docs.docker.com/engine/install/) according to your system requirement.
 3. Create a new Heroku app (replace `<app_name>` with the app name you choose)
 
-```shell
+```
 heroku login
 heroku apps:create <app_name>
 ```
 
 4. Configure the Django secret key as an environment variable (replace `<your_secret_key>` with your secret key).
 
-```shell
+```
 heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
 ```
 
 4. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile. You can now build and push the container using Heroku CLI, then release it the Heroku.
 
-```shell
+```
 docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
 ```
 
@@ -100,13 +102,13 @@ Note: It is preferable to use the command `docker build` rather than `heroku con
 
 Login to the Heroku container registry:
 
-```shell
+```
 heroku container:login
 ```
 
 Push the container and release the application:
 
-```shell
+```
 docker push registry.heroku.com/<app_name>/web
 heroku container:release web -a <app_name>
 ```
@@ -121,7 +123,7 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
 
 * build:
   * builds a docker container image incorporating Python 3.9 based on [CircleCi legacy language images](https://circleci.com/docs/2.0/circleci-images/#legacy-language-images)
-  * creates a virtual environment, install 3rd party all packages required for the project.
+  * creates a virtual environment, install 3rd party packages required for the project.
   * saves the environment in the cache
 * test:
   * builds the CircleCI docker image and restore the environment from the cache
@@ -132,6 +134,7 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
   * run the quality check using the command `flake8`
   * the testing starts only **after the job build is successfully completed**
 * package:
+  * builds the CircleCI docker image and restore the environment from the cache
   * builds a Docker container according to the requirements of the file `Dockerfile`
   * pushes the Docker container to the Dockerhub
   * the package job starts only **after the jobs test and linting are successfully completed**
@@ -166,8 +169,8 @@ A simple surveillance process is implemented. The navigation to the page `/sentr
 
 ![sentry](sentry.jpg)
 
-The project Data Source Name (DSN) shall be stored as in the environment variable SENTRY_DSN in Heroku (replace <your_dsn> by your project DSN and <app_name> by the Heroku app name):
+The project Data Source Name (DSN) shall be stored in the environment variable SENTRY_DSN in Heroku (replace <your_dsn> by your project DSN and <app_name> by the Heroku app name):
 
-```shell
+```
 heroku config:set SENTRY_DSN="<your_DSN>" -a <app_name>
 ```
