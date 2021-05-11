@@ -1,0 +1,37 @@
+@media (max-width: 767px) {
+    /* Base Page styles */
+    /**************************************************************************/
+    header.wrapper {
+
+        grid-template-areas:
+            "logo brand"
+            "contacts contacts"
+            "menu menu";
+        grid-template-columns: auto;
+        grid-template-rows: min-content;
+    }
+
+    .contacts {
+        grid-template-columns: 1fr;
+
+    }
+
+    .menu_box {
+        flex-direction: column;
+    }
+    
+    /* Home Page styles */
+    /**************************************************************************/
+
+    .bg_image img {
+        width: min-content;
+        height: fit-content;
+    }
+
+    /* Small card styles */
+    /**************************************************************************/
+
+    .cards_list {
+        grid-template-columns: min-content;
+    }
+}

@@ -92,7 +92,7 @@ heroku apps:create <app_name>
 heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
 ```
 
-4. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile. You can now build and push the container using Heroku CLI, then release it the Heroku.
+4. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile.
 
 ```
 docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
@@ -126,15 +126,15 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
   * creates a virtual environment, install 3rd party packages required for the project.
   * saves the environment in the cache
 * test:
-  * builds the CircleCI docker image and restore the environment from the cache
+  * builds the CircleCI Python 3.9 docker image and restore the environment from the cache
   * run the test suite using the command `pytest`
   * the testing starts only **after the job build is successfully completed**
 * linting:
-  * builds the CircleCI docker image and restore the environment from the cache
+  * builds the CircleCI  Python 3.9 docker image and restore the environment from the cache
   * run the quality check using the command `flake8`
-  * the testing starts only **after the job build is successfully completed**
+  * the linting starts only **after the job build is successfully completed**
 * package:
-  * builds the CircleCI docker image and restore the environment from the cache
+  * builds the CircleCI  Python 3.9 docker image and restore the environment from the cache
   * builds a Docker container according to the requirements of the file `Dockerfile`
   * pushes the Docker container to the Dockerhub
   * the package job starts only **after the jobs test and linting are successfully completed**
@@ -145,9 +145,9 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
   * releases the Heroku application
   * the deploy job starts only **after the job deploy is successfully completed**  
 
-The jobs build, test, linting are automatically performed everytime a new commit is pushed to the Github repository.
+The jobs *build, test, linting* are automatically performed everytime a new commit is pushed to the Github repository.
 
-The jobs package, deploy are automatically performed everytime a **new commit of the branch main** is pushed to the Github repository.
+The *jobs package, deploy* are automatically performed everytime a **new commit of the branch main** is pushed to the Github repository.
 
 ## CircleCI Environment
 
