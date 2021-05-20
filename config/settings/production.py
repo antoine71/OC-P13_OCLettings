@@ -21,7 +21,7 @@ ALLOWED_HOSTS = ['.herokuapp.com']
 # SECURITY
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
 SESSION_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
