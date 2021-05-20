@@ -4,3 +4,9 @@ venv
 
 .vscode/
 .DS_store/
+
+staticfiles/
+
+.pytest_cache/
+
+
