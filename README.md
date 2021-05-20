@@ -100,20 +100,23 @@ docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
 
 Note: It is preferable to use the command `docker build` rather than `heroku container:push` to build the container since it allows to specify the platform for which the container is built. Building the container from a different plateform (eg. arm64) using `heroku` command line may cause malfunctions.
 
+
+
+Run the container locally:
+
+````
+docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -e PORT=8000 -p 127.0.0.1:8000:8000 registry.heroku.com//<app_name>/web:latest
+```
+
+6. Push the container and release the application:
+
 Login to the Heroku container registry:
 
 ```
 heroku container:login
 ```
 
-Run the container locally:
-
-````
-docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -p 127.0.0.1:8000:8000 registry.heroku.com//<app_namw>/web:latest
-```
-
-6. Push the container and release the application:
-
+Push the container and release the application:
 ```
 docker push registry.heroku.com/<app_name>/web:latest
 heroku container:release web -a <app_name>
