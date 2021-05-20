@@ -92,7 +92,7 @@ heroku apps:create <app_name>
 heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
 ```
 
-4. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile.
+5. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile.
 
 ```
 docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
@@ -106,14 +106,20 @@ Login to the Heroku container registry:
 heroku container:login
 ```
 
-Push the container and release the application:
+Run the container locally:
+
+````
+docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -p 127.0.0.1:8000:8000 registry.heroku.com//<app_namw>/web:latest
+```
+
+6. Push the container and release the application:
 
 ```
-docker push registry.heroku.com/<app_name>/web
+docker push registry.heroku.com/<app_name>/web:latest
 heroku container:release web -a <app_name>
 ```
 
-5. You can now check the website from the following address: `https://<app_name>.herokuapp.com`.
+7. You can now check the website from the following address: `https://<app_name>.herokuapp.com`.
 
 ## Deployment using CircleCI CI/CD Pipeline
 

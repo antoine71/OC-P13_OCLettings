@@ -9,4 +9,4 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "config.wsgi", "-b 0.0.0.0"]
+CMD ["gunicorn", "config.wsgi", "-b 0.0.0.0:$PORT"]
