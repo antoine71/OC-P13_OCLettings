@@ -5,7 +5,7 @@
 
         grid-template-areas:
             "logo brand"
-            "contacts contacts"
+            "logo contacts"
             "menu menu";
         grid-template-columns: auto;
         grid-template-rows: min-content;
@@ -19,13 +19,23 @@
     .menu_box {
         flex-direction: column;
     }
+
+    .menu_choice {
+        text-align: center;
+        font-size: 1.5em;
+    }
     
     /* Home Page styles */
     /**************************************************************************/
+    .bg_image {
+        overflow: hidden;
+        width: 100%;
+    }
+
 
     .bg_image img {
         width: min-content;
-        height: fit-content;
+        height: 100%;
     }
 
     /* Small card styles */

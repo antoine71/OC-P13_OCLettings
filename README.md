@@ -72,14 +72,33 @@ username: `admin`
 
 password: `Abc1234!`
 
-## Deployement using Heroku and Docker CLI
+## Local deployment using Docker CLI
 
-The application is pre-configured to be built in a Docker container and deployed on Heroku for production. 
+The repository contains a `Dockerfile`that allows to easily build a Docker container and locally run the application. The same container can be used for deployement for production.
+
+1. Download and install [Docker engine](https://docs.docker.com/engine/install/) according to your system requirement.
+
+2. Navigate to the application root folder and build the container.
+
+```
+docker build --platform linux/amd64 -t oc-lettings .
+```
+
+3. Run the container locally:
+
+```
+docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -e PORT=8000 -p 127.0.0.1:8000:8000 oc-lettings:latest
+```
+
+The website can now be accessed locally from a web browser at `http://127.0.0.1:8000`
+
+## Deployement using Heroku CLI
+
+The application is pre-configured to be deployed on Heroku for production. This procedure assumes that you already have created locally a container named `oc-lettings`as described before.
 
 1. Create a user account on [Heroku](https://www.heroku.com)
 2. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
-3. Download and install [Docker engine](https://docs.docker.com/engine/install/) according to your system requirement.
-3. Create a new Heroku app (replace `<app_name>` with the app name you choose)
+3. Login and create a new Heroku app (replace `<app_name>` with the app name you choose)
 
 ```
 heroku login
@@ -92,20 +111,10 @@ heroku apps:create <app_name>
 heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
 ```
 
-5. Navigate to the application root folder and build the container. The repository comes with a pre-configured Dockerfile.
+5. Retag the container as per the Heroku app name:
 
 ```
-docker build --platform linux/amd64 -t registry.heroku.com/<app_name>/web .
-```
-
-Note: It is preferable to use the command `docker build` rather than `heroku container:push` to build the container since it allows to specify the platform for which the container is built. Building the container from a different plateform (eg. arm64) using `heroku` command line may cause malfunctions.
-
-
-
-Run the container locally:
-
-````
-docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -e PORT=8000 -p 127.0.0.1:8000:8000 registry.heroku.com//<app_name>/web:latest
+docker tag oc-lettings:latest registry.heroku.com/<app_name>/web:latest
 ```
 
 6. Push the container and release the application:
