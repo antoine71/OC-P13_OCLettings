@@ -44,14 +44,8 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            pytest
-      - run:
-          name: Building test report
-          command: |
-            . venv/bin/activate
-            mkdir test-reports
-            coverage run -m pytest
-            coverage xml -o test-reports/coverage.xml
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-reports
       - store_artifacts:
