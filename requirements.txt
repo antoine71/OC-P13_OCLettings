@@ -6,6 +6,7 @@ pytest==6.2.3
 pytest-django==3.9.0
 factory-boy==3.2.0
 faker==8.1.2
+coverage==5.5
 
 # linting
 flake8==3.7.0

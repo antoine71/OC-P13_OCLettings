@@ -3,7 +3,7 @@
 venv
 
 .vscode/
-.DS_store/
+.DS_store
 
 staticfiles/
 
