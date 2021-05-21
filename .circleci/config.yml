@@ -48,6 +48,7 @@ jobs:
       - run:
           name: Building test report
           command: |
+            . venv/bin/activate
             mkdir test-reports
             coverage run -m pytest
             coverage xml -o test-reports/coverage.xml
