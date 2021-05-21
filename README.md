@@ -4,13 +4,13 @@ Openclassrooms - Parcours développement Python Projet 13
 
 ## Status
 
-This project is under development.
+This project is ready for evaluation.
 
 ## Description
 
 Orange County Lettings (OC Lettings) is a start-up specialized in real estate rental business. The start-up is in the midst of expansion in the United States.
 
-This project consists in refactoring OC Lettings website and deploying it on Heroku using a container and a CI/CD pipeline. The website reflecting the result of the refactoring and deployment is available at the following address:
+This project consists in refactoring OC Lettings website application code and deploying it on Heroku using a container and a CI/CD pipeline. The website reflecting the result of the refactoring and deployment is available at the following address:
 
 http://oc-lettings-2.herokuapp.com.
 
@@ -78,7 +78,7 @@ The repository contains a `Dockerfile`that allows to easily build a Docker conta
 
 1. Download and install [Docker engine](https://docs.docker.com/engine/install/) according to your system requirement.
 
-2. Navigate to the application root folder and build the container.
+2. Navigate to the application root folder and build the container named `oc-lettings`:
 
 ```
 docker build --platform linux/amd64 -t oc-lettings .
@@ -94,7 +94,7 @@ The website can now be accessed locally from a web browser at `http://127.0.0.1:
 
 ## Deployement using Heroku CLI
 
-The application is pre-configured to be deployed on Heroku for production. This procedure assumes that you already have created locally a container named `oc-lettings`as described before.
+The application is pre-configured to be deployed on Heroku for production. This procedure assumes that you already have created locally a container named `oc-lettings` as described above.
 
 1. Create a user account on [Heroku](https://www.heroku.com)
 2. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
@@ -134,6 +134,8 @@ heroku container:release web -a <app_name>
 7. You can now check the website from the following address: `https://<app_name>.herokuapp.com`.
 
 ## Deployment using CircleCI CI/CD Pipeline
+
+The pipeline create for the project is available at the following address: <https://app.circleci.com/pipelines/github/antoine71/OC-P13_OCLettings>.
 
 The repository container a configuration file for CircleCI : `.circleci/config.yml`. This files implements the following *workflow*:
 
@@ -179,7 +181,7 @@ The CircleCI project environment includes the following variables:
 
 `HEROKU_API_KEY`: the API key corresponding to the Heroku account
 
-This variables shall be modified to use different Docker or Heroku account or app name.
+This variables shall be created as [environnement variables for the project](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project) to run the pipeline on a different CircleCI repository, and modified as required to use different Docker or Heroku account or app name.
 
 ## Monitoring using Sentry
 
@@ -187,7 +189,7 @@ A simple surveillance process is implemented. The navigation to the page `/sentr
 
 ![sentry](sentry.jpg)
 
-The project Data Source Name (DSN) shall be stored in the environment variable SENTRY_DSN in Heroku (replace <your_dsn> by your project DSN and <app_name> by the Heroku app name):
+The project Data Source Name (DSN) shall be stored in the environment variable SENTRY_DSN in Heroku (replace <your_DSN> by your project DSN and <app_name> by the Heroku app name):
 
 ```
 heroku config:set SENTRY_DSN="<your_DSN>" -a <app_name>

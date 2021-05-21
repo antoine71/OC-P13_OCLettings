@@ -32,6 +32,3 @@ def test_profile_view(rf):
     assert b'100' in response.content
     assert b'title test' in response.content
     assert b'test street' in response.content
-
-def test_test():
-    assert 1 == 0
