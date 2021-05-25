@@ -72,6 +72,28 @@ username: `admin`
 
 password: `Abc1234!`
 
+## Testing
+
+The test suite can be run using the following command:
+
+```
+pytest
+```
+
+The coverage report can be generated using the following command:
+
+```
+coverage run -m pytest
+```
+
+The html report can be generated with the following command
+
+```
+coverage html
+```
+
+The report will be created in the subfolder `htmlcov/`.
+
 ## Local deployment using Docker CLI
 
 The repository contains a `Dockerfile`that allows to easily build a Docker container and locally run the application. The same container can be used for deployement for production.
@@ -135,7 +157,7 @@ heroku container:release web -a <app_name>
 
 ## Deployment using CircleCI CI/CD Pipeline
 
-The pipeline create for the project is available at the following address: <https://app.circleci.com/pipelines/github/antoine71/OC-P13_OCLettings>.
+The pipeline created for the project is available at the following address: <https://app.circleci.com/pipelines/github/antoine71/OC-P13_OCLettings>.
 
 The repository container a configuration file for CircleCI : `.circleci/config.yml`. This files implements the following *workflow*:
 
