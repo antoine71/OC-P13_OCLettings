@@ -4,16 +4,22 @@
     header.wrapper {
 
         grid-template-areas:
-            "logo brand"
-            "logo contacts"
-            "menu menu";
+            "brand"
+            "contacts"
+            "menu";
         grid-template-columns: auto;
         grid-template-rows: min-content;
     }
 
+    .logo {
+        display: none;
+    }
+
     .contacts {
         grid-template-columns: 1fr;
-
+        padding-top: 1em;
+        padding-bottom: 1em;
+        gap: 0.4em;
     }
 
     .menu_box {

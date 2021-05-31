@@ -126,13 +126,16 @@ The application is pre-configured to be deployed on Heroku for production. This 
 
 ```
 heroku login
+```
+
+```
 heroku apps:create <app_name>
 ```
 
 4. Configure the Django secret key as an environment variable (replace `<your_secret_key>` with your secret key).
 
 ```
-heroku config:set DJANGO_SECRET_KEY="<your_secret_key>" -a <app_name>
+heroku config:set DJANGO_SECRET_KEY='<your_secret_key>' -a <app_name>
 ```
 
 5. Retag the container as per the Heroku app name:
@@ -216,7 +219,7 @@ A simple surveillance process is implemented. The navigation to the page `/sentr
 The project Data Source Name (DSN) shall be stored in the environment variable SENTRY_DSN in Heroku (replace <your_DSN> by your project DSN and <app_name> by the Heroku app name):
 
 ```
-heroku config:set SENTRY_DSN="<your_DSN>" -a <app_name>
+heroku config:set SENTRY_DSN='<your_DSN>' -a <app_name>
 ```
 
 The sentry issue report is available at the following adress:
