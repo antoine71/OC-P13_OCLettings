@@ -16,7 +16,7 @@ http://oc-lettings-2.herokuapp.com.
 
 ![preview](preview.jpg)
 
-## Technical assessment
+## Technical background
 
 The project uses the following technologies:
 
@@ -93,6 +93,8 @@ coverage html
 ```
 
 The report will be created in the subfolder `htmlcov/`.
+
+![coverage](coverage.jpg)
 
 ## Local deployment using Docker CLI
 
@@ -216,3 +218,6 @@ The project Data Source Name (DSN) shall be stored in the environment variable S
 ```
 heroku config:set SENTRY_DSN="<your_DSN>" -a <app_name>
 ```
+
+The sentry issue report is available at the following adress:
+<https://sentry.io/share/issue/2eb30ffc626b4bebb06f05302691d997/>
