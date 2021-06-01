@@ -111,7 +111,7 @@ docker build --platform linux/amd64 -t oc-lettings .
 3. Run the container locally:
 
 ```
-docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -e PORT=8000 -p 127.0.0.1:8000:8000 oc-lettings:latest
+docker run --platform linux/amd64 -e DJANGO_SETTINGS_MODULE=config.settings.local -e PORT=8000 -p 127.0.0.1:8000:8000 -d oc-lettings:latest
 ```
 
 The website can now be accessed locally from a web browser at `http://127.0.0.1:8000`
